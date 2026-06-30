@@ -1,0 +1,672 @@
+---
+# CFD project source
+# PROJECTROOTPATH: "C:\\Developer\\Ruixuan\\SVA_GPA_Simulation\\Configuration"
+PROJECTROOTPATH: "SVA_GPA_Simulation\\Configuration"
+PROJECTNAME: "SPA3_Configuration"
+APPLICATIONNAME: "SysInt"
+#COMMUNICATIONMATRIXPATH: "J:\\HIL\\HIL_Development\\SPA3\\Common\\SDB\\14.3"   # Use the abs path to ARXML file
+COMMUNICATIONMATRIXPATH: "SVA_GPA_Simulation\\SDB"   # Use the abs path to ARXML file
+
+# Model Source
+M_SCRIPT_PATH: "auto_config\\matlab"
+
+# Leave this section empty if you are not using MATLAB project concept
+# ---------------------------------------------------------------------------
+MODEL_PROJECT_PATH: "SVA_GPA_Simulation\\Simulation"
+MODEL_PROJECT_NAME: "MasterModel"
+# ---------------------------------------------------------------------------
+
+MODEL_PATH: "SVA_GPA_Simulation\\Simulation\\ModelFiles\\ASM_EV_Model\\Models"
+ASM_MODEL_NAME: "ASM_BEV_Model"
+IO_MODEL_NAME: "IO"
+CAN_SUBSYSTEM_NAME: "CAN"
+LIN_SUBSYSTEM_NAME: "LIN"
+
+VCCCLUSTERLIST:
+    - cluster: "BCME1CAN"
+      type: "CAN"
+      ECU: ["BCME"]
+      mode: ["Simulation"]
+
+    - cluster: "BCM1CAN"
+      type: "CAN"
+      ECU: ["BCME", "BCMD"]
+      mode: ["Simulation", "Simulation"]
+    
+    - cluster: "FrontLightLeft1CAN"
+      type: "CAN"
+      ECU: ["HCML"]
+      mode: ["Simulation"]
+    
+    - cluster: "FrontLightRight1CAN"
+      type: "CAN"
+      ECU: ["HCMR"]
+      mode: ["Simulation"]
+
+    - cluster: "Exposed4CAN"
+      type: "CAN"
+      ECU: ["GCCC"]
+      mode: ["Simulation"]
+    
+    - cluster: "IHFA1CAN"
+      type: "CAN"
+      ECU: ["IHFA"]
+      mode: ["Simulation"]
+
+    - cluster: "IHRA1CAN"
+      type: "CAN"
+      ECU: ["IHRA"]
+      mode: ["Simulation"]
+    
+    - cluster: "PSCM1CAN"
+      type: "CAN"
+      ECU: ["PSCM"]
+      mode: ["Simulation"]
+
+    - cluster: "SRSMainCAN"
+      type: "CAN"
+      ECU: ["SRS"]
+      mode: ["Simulation"]
+
+    - cluster: "SRSRedundantCAN"
+      type: "CAN"
+      ECU: ["SRS"]
+      mode: ["Simulation"]
+
+    - cluster: "SWM2CAN"
+      type: "CAN"
+      ECU: ["SWM"]
+      mode: ["Simulation"]
+
+    - cluster: "TIOC1CAN"
+      type: "CAN"
+      ECU: ["TIOC"]
+      mode: ["Simulation"]
+
+    - cluster: "LeftDoor1CAN"
+      type: "CAN" 
+      ECU: ["FLDM", "RLDM"]
+      mode: ["Simulation", "Simulation"]
+
+    - cluster: "RightDoor1CAN"
+      type: "CAN"
+      ECU: ["FRDM", "RRDM"]
+      mode: ["Simulation", "Simulation"]
+
+    - cluster: "HighVoltage1CAN"
+      type: "CAN"
+      ECU: ["HVBM", "HVCR"]
+      mode: ["Simulation", "Simulation"]
+
+    - cluster: "LVBM1CAN"
+      type: "CAN"
+      ECU: ["LVBM"]
+      mode: ["Simulation"]
+
+    - cluster: "LPCAN"
+      type: "CAN"
+      ECU: ["HVCL", "LPA", "TIOC"]
+      mode: ["Simulation", "Real", "Simulation"]
+
+    - cluster: "FLR1CAN"
+      type: "CAN"
+      ECU: ["FLR"]
+      mode: ["Real"]
+
+    - cluster: "FSRL1CAN"
+      type: "CAN"
+      ECU: ["FSRL"]
+      mode: ["Real"]
+
+    - cluster: "FSRR1CAN"
+      type: "CAN"
+      ECU: ["FSRR"]
+      mode: ["Real"]
+
+    - cluster: "RSRL1CAN"
+      type: "CAN"
+      ECU: ["RSRL"]
+      mode: ["Real"]
+
+    - cluster: "RSRR1CAN"
+      type: "CAN"
+      ECU: ["RSRR"]
+      mode: ["Real"]
+
+    - cluster: "PSM1CAN"
+      type: "CAN"
+      ECU: ["PSMD", "PSMP"]
+      mode: ["Simulation", "Simulation"]
+
+    - cluster: "TCAM1CAN"
+      type: "CAN"
+      ECU: ["NFCA", "PAK", "UXC"]
+      mode: ["Simulation", "Simulation", "Simulation"]
+
+    - cluster: "Exposed3CAN"
+      type: "CAN"
+      ECU: ["WPC", "ETCM"]
+      mode: ["Simulation", "Simulation"]
+
+    - cluster: "RefrigerantSystem1LIN"
+      type: "LIN"
+      ECU: ["ELAC"]
+      mode: ["Simulation"]
+
+    - cluster: "RML1CAN"
+      type: "CAN"
+      ECU: ["RML"]
+      mode: ["Simulation"]
+
+    - cluster: "RMR1CAN"
+      type: "CAN"
+      ECU: ["RMR"]
+      mode: ["Simulation"]
+
+    - cluster: "OHC1CAN"
+      type: "CAN"
+      ECU: ["OHRL", "OHRR"]
+      mode: ["Real", "Real"]
+
+    - cluster: "Exposed2CAN"
+      type: "CAN"
+      ECU: ["TCA"]
+      mode: ["Simulation"]
+
+    - cluster: "SWM1LIN"
+      type: "LIN"
+      ECU: ["SWM"]
+      mode: ["Simulation"]
+
+    - cluster: "HOD1LIN"
+      type: "LIN"
+      ECU: ["HOD"]
+      mode: ["Simulation"]
+
+    - cluster: "SWSM1LIN"
+      type: "LIN"
+      ECU: ["SWSM"]
+      mode: ["Simulation"]
+
+
+# Solution CAN list
+SOLCLUSTERLIST:
+
+# Initial Value
+INITIAL_VALUE:
+
+    - cluster: "BCM1CAN"
+      isActMod12BrakePedalAppliedQf: 1
+      isActMod12FxTargetDriverQf: 1
+      isActMod12pRunoutQf: 1
+      isActMod12ActCircuitNoPressureQf: 1
+      isActMod11sInputRodQf: 1
+      isActMod11sOutputRodActQf: 1
+      isEPBActuationDataDPBCpby: 1
+      isEPBActuationDataESPCpby: 1
+      isPostRunBCMDRsn: 2
+      isActMod12RecuStatusAct: 1
+      isModAct2DriverPresent: 1
+      isModAct3WssTtcFactorFL: 0.99
+      isModAct3WssTtcFactorFR: 0.99
+      isModAct3WssTtcFactorRL: 1.009
+      isModAct3WssTtcFactorRR: 1.009
+      isModAct3BfdFAMax: 0.683
+      isModAct3BfdFAMin: 0.683
+      isDrvrBrkPedlReqBrkPedlPsdQf: True
+      BrkSysRespSafeRdntCopyFailSafeFlgOTR: 15
+
+    - cluster: "BCME1CAN"
+      isWhlBrkTqMaxOvrheatdFrntLe: 3000
+      isWhlBrkTqMaxOvrheatdFrntRi: 3000
+      isWhlBrkTqMaxOvrheatdReLe: 3000
+      isWhlBrkTqMaxOvrheatdReRi: 3000
+      isDrvrBrkPedlReqRdntBrkPedlPsdQf: True
+      isBrkSysRespSafeFailSafeFlgOTR: 15
+      isBrkSysCtrlBrkSysDecCtrlAvl: 3
+      isBrkSysCtrlBrkSysDecCtrlCpby: 3
+      isBrkSysCtrlBrkSysStabyCtrlAv: 3
+      isBrkSysCtrlBrkSysStabyCtrlCpby: 4                                                                                                                                         
+    
+
+    - cluster: "LVBM1CAN"
+      LoUBattSOCEstimSOCEstim: 100
+      LoUBattSOCEstimSOCEstimQlyFlg: 3
+      LoUBattSOHSOHVal: 100
+      LoUBattSOHSOHQlyFlg: 3
+      LoUBattIBattIVal: 50
+      LoUBattIBattIQlyFlg: 3
+      LoUBattUUVal: 15
+      LoUBattUUVal1LoUBatt: 15
+      LoUBattUUQlyFlg: 3
+      LoUBattNTC1TNTC1TempVal: 25
+      LoUBattNTC2TNTC2TempVal: 25
+      DcBreakStv1: 2
+      FrntWhlAngCtrlSts: 3
+    
+    - cluster: "SRSMainCAN"
+      IMURawAndProcessedDataIndicationIMUPitchRateCompQF: 7
+      IMURawAndProcessedDataIndicationIMURollRateCompQF: 7
+      IMURawAndProcessedDataIndicationIMUYawRateCompQF: 7
+      IMUProcessedDataPitchRateCompQf: 7
+      IMUProcessedDataRollRateCompQf: 7
+      IMUProcessedDataYawRateCompQf: 7
+      BeltStatusIndicationBeltBuckleStatusDriver: 1
+      BeltStatusIndicationBeltBuckleStatus2ndRowCenter: 2
+      BeltStatusIndicationBeltBuckleStatus2ndRowLeft: 2
+      BeltStatusIndicationBeltBuckleStatus2ndRowRight: 2
+      BeltStatusIndicationBeltBuckleStatus3rdRowCenter: 2
+      BeltStatusIndicationBeltBuckleStatus3rdRowLeft: 2
+      BeltStatusIndicationBeltBuckleStatus3rdRowRight: 2
+      BeltStatusIndicationBeltBuckleStatusPassenger: 2
+      PostCrashStatusCrashStatusMain: 1
+      PostCrashStatusNumberOfBuckledBelts: 1
+      PostCrashIndicationCrashStatus: 1
+      SRSOperationStatusSRSOperationModeActual: 5
+      LevelSensorMetaDataFrontLevelSensorMetaData1: 5486228771067445284
+      LevelSensorMetaDataFrontLevelSensorMetaData2: 2087442
+      LevelSensorMetaDataRearLevelSensorMetaData1: 5486228771067445284
+      LevelSensorMetaDataRearLevelSensorMetaData2: 580626
+      LevelSensorInformationFrontLevelSensorAngleSampleT0Slot1: 257
+      LevelSensorInformationFrontLevelSensorAngleSampleT0Slot2: 43
+      LevelSensorInformationFrontLevelSensorAngleSampleT2Slot1: 257
+      LevelSensorInformationFrontLevelSensorAngleSampleT2Slot2: 45
+      LevelSensorInformationFrontLevelSensorAngleSampleT4Slot1: 257
+      LevelSensorInformationFrontLevelSensorAngleSampleT4Slot2: 45
+      LevelSensorInformationFrontLevelSensorAngleSampleT6Slot1: 257
+      LevelSensorInformationFrontLevelSensorAngleSampleT6Slot2: 44
+      LevelSensorInformationFrontLevelSensorAngleSampleT8Slot1: 257
+      LevelSensorInformationFrontLevelSensorAngleSampleT8Slot2: 44
+      LevelSensorInformationFrontLevelSensorQFT0: 3
+      LevelSensorInformationFrontLevelSensorQFT2: 3
+      LevelSensorInformationFrontLevelSensorQFT4: 3
+      LevelSensorInformationFrontLevelSensorQFT6: 3
+      LevelSensorInformationFrontLevelSensorQFT8: 3
+      LevelSensorInformationRearLevelSensorAngleSampleT0Slot1: 260
+      LevelSensorInformationRearLevelSensorAngleSampleT0Slot2: 243
+      LevelSensorInformationRearLevelSensorAngleSampleT2Slot1: 260
+      LevelSensorInformationRearLevelSensorAngleSampleT2Slot2: 243
+      LevelSensorInformationRearLevelSensorAngleSampleT4Slot1: 260
+      LevelSensorInformationRearLevelSensorAngleSampleT4Slot2: 244
+      LevelSensorInformationRearLevelSensorAngleSampleT6Slot1: 260
+      LevelSensorInformationRearLevelSensorAngleSampleT6Slot2: 244
+      LevelSensorInformationRearLevelSensorAngleSampleT8Slot1: 260
+      LevelSensorInformationRearLevelSensorAngleSampleT8Slot2: 244
+      LevelSensorInformationRearLevelSensorQFT0: 3
+      LevelSensorInformationRearLevelSensorQFT2: 3
+      LevelSensorInformationRearLevelSensorQFT4: 3
+      LevelSensorInformationRearLevelSensorQFT6: 3
+      LevelSensorInformationRearLevelSensorQFT8: 3
+
+    - cluster: "SRSRedundantCAN"
+      IMUADProcessedDataLatRedundantIMUADLatAccRedundantQf: 7
+      IMUADProcessedDataLongRedundantIMUADLongAccRedundantQf: 7
+      IMUADProcessedDataPitchRedundantIMUADPitchRateRedundantQf: 7
+      IMUADProcessedDataRollRedundantIMUADRollRateRedundantQf: 7
+      IMUADProcessedDataVertRedundantIMUADVertAccRedundantQf: 7
+      IMUADProcessedDataYawRedundantIMUADYawRateRedundantQf: 7
+    
+    - cluster: "HighVoltage1CAN"
+      isLoSideDcDcLwUAct: 15
+      isLoSideDcDcRnUAct: 15
+      isModStsDcDcLwModStsDcDc: 1
+      isModStsDcDcRnModStsDcDc: 1
+      isLoSideOutStsLwSwt1: 1
+      isLoSideOutStsLwSwt2: 1
+      isLoSideOutStsLwSwt3: 1
+      isLoSideOutStsLwSwt4: 1
+      isLoSideOutStsLwSwt5: 1
+      isLoSideOutStsLwSwt6: 1
+      isLoSideOutStsLwSwt7: 1
+      isLoSideOutStsLwSwt8: 1
+      isLoSideOutStsRnSwt1: 1
+      isLoSideOutStsRnSwt2: 1
+      isLoSideOutStsRnSwt3: 1
+      isLoSideOutStsRnSwt4: 1
+      isLoSideOutStsRnSwt5: 1
+      isLoSideOutStsRnSwt6: 1
+      isLoSideOutStsRnSwt6: 1
+      isLoSideOutStsRnSwt7: 1
+      isLoSideOutStsRnSwt8: 1
+      isHvBattUDynMaxLim1: 800
+      isHvBattPwr2Pwr: 410
+      isHvBattDchaPwrLimSafe1DchaPwr: 544
+      isBMSSt1: 1
+      isChrgnSt: 2
+      isMaiFuseSt1: 1
+      isHvRlyFltDcSts2PosRlySts1: 1
+      isHvRlyFltDcSts2NegRlySts1: 1
+      isDcDcLeFuseSts: 1
+      isDcDcRiFuseSts: 1
+      isOnBdChrgrFuseSts: 1
+      isHvAirHeatrFuseSts: 1
+      isHvCooltHeatrFuseSts: 1
+      isHvBattThermEveDetd: 1
+      isHvBattDiscnctWarn2Warn: 1
+      isHvSysTestReq: 2
+      isHvBattChrgnSts: 1
+      isHvSysIsoFltSts: 1
+      isIsoMeasCircFltSts: 1
+      isHvBattCooltTIntkSts1: 3
+      isHvSysIsoRMonrSts: 1
+      isNrOfPacks: 1
+      isNrOfCells: 192
+      HvBattInhbDcDcSafe1DcDcInhbnReq: 1
+      HvBattInhbDcDcSafe2DcDcInhbnReq: 1
+      DrtFacDcDcLwFac: 100
+      DrtFacDcDcRnFac: 100
+      HvBattEgyActTotBoL: 117120
+      HvBattSoH1: 100
+      HvBattSoH2: 100
+      HvBattSoHConfidence1: 100
+      HvSysRRTot: 19208
+      HvSysRRNeg: 30000
+      HvSysRRNeg: 30000
+    
+    - cluster: "TIOC1CAN"
+      isDeviceAdminReqFromTIOCToZCLBEcuList1: 1879048191
+      isDeviceAdminReqFromTIOCToZCLBEcuList2: 4294967294
+      isDeviceAdminReqFromTIOCToZCLBEcuList3: 4294964223
+      isDeviceAdminReqFromTIOCToZCLBEcuList4: 4294967295
+      isDeviceAdminReqFromTIOCToZCLBEcuList5: 4294967295
+      isDeviceAdminReqFromTIOCToZCLBEcuList6: 4294967295
+      isDeviceAdminSyncStsFromTIOCToZCLBEcuList1: 0
+      isDeviceAdminSyncStsFromTIOCToZCLBEcuList2: 0
+      isDeviceAdminSyncStsFromTIOCToZCLBEcuList3: 0
+      isDeviceAdminSyncStsFromTIOCToZCLBEcuList4: 0
+      isDeviceAdminSyncStsFromTIOCToZCLBEcuList5: 0
+      isDeviceAdminSyncStsFromTIOCToZCLBEcuList6: 0
+      isTrAndTrLtchStsTrOpenerSts: 1
+    
+    - cluster: "LeftDoor1CAN"
+      isDoorFrntLeStsSafeDoorSts: 2
+      isDoorStsLe: 1
+      isDoorStsReLe: 1
+    
+    - cluster: "RightDoor1CAN"
+      isDoorFrntRiStsSafeDoorSts: 2
+      isDoorStsRi: 1
+      isDoorStsReRi: 1
+    
+    - cluster: "SWM2CAN"
+      isGearLvrReqGearShiftrSts: 3
+      isGearLvrReqParkSwtSts: 3
+      isGearLvrReqGearShiftrPosn: 0
+    
+    - cluster: "IHFA1CAN"
+      isEmTqAvlXXIHFAMax: 330
+      isEmTqAvlXXIHFAMin: -330
+      isEmSftyFrnt1TqActSafeStSts: 0
+      isEmNSpdActQfXXIHFA: 3
+    
+    - cluster: "IHRA1CAN"
+      isEmTqAvlMax: 330
+      isEmTqAvlMin: -330
+      isEmSftyTqActSafeStSts: 3
+    
+    - cluster: "Exposed4CAN"
+      isHvRlyChrgnReqDc1: 0
+      isHvChrgnCmpl: 2
+      isHvSysDeactvtIsoRMonrReq: 1
+      isHvDestStOfChrgCmpl: 2
+      isHvMinStOfChrgCmpl: 2
+      isHvDchaCmpl: 2        
+      isHvChrgnPortSts: 2
+
+    - cluster: "PSM1CAN"
+      isDrvrSeatSnsrStsDrvrSeatBltBucSts: 1
+      DrvrSeatSnsrStsDrvrSeatOccptDetnSts: 1
+      isDrvrSeatSnsrStsDrvrSeatTrackPosnSts: 1
+      isDrvrSeatSpplFctMeclBlkStsDrvrSeatBackInclnMeclBlkSts: 2
+      isDrvrSeatSpplFctMeclBlkStsDrvrSeatCushExtnMeclBlkSts: 2
+      isDrvrSeatSpplFctMeclBlkStsDrvrSeatCushTiltMeclBlkSts: 2
+      isDrvrSeatSpplFctMeclBlkStsDrvrSeatHdrestHeiMeclBlkSts: 2
+      isDrvrSeatSpplFctMeclBlkStsDrvrSeatHdrestTiltMeclBlkSts: 2
+      isDrvrSeatSpplFctMeclBlkStsDrvrSeatHeiMeclBlkSts: 2
+      isDrvrSeatSpplFctMeclBlkStsDrvrSeatSldMeclBlkSts: 2
+      isDrvrSeatStsDrvrSeatAutMovmtSts: 1
+      isDrvrSeatStsDrvrSeatFctSts: 1
+      isDrvrSeatStsDrvrSeatFctStsInfo: 1
+      isDrvrSeatSwtStsRotyDrvrBtnBackwSts: 1
+      isDrvrSeatSwtStsRotyDrvrBtnDwnSts: 1
+      isDrvrSeatSwtStsRotyDrvrBtnFwdSts: 1
+      isDrvrSeatSwtStsRotyDrvrBtnModSts: 1
+      isDrvrSeatSwtStsRotyDrvrBtnRotCcwSts: 1
+      isDrvrSeatSwtStsRotyDrvrBtnRotCwSts: 1
+      isDrvrSeatSwtStsRotyDrvrBtnUpSts: 1
+      isDrvrSeatSwtStsRotyDrvrSeatBtnPsd: 1
+      isDrvrSeatSwtStsRotyDrvrSeatSwtActvnMplErr: 1
+      isPassSeatSnsrStsPassSeatBltBucSts: 2
+      isPassSeatSnsrStsPassSeatTrackPosnSts: 1
+      isPassSeatSts2PassSeatFctSts: 1
+      isPassSeatSts2PassSeatFctStsInfo: 1
+      isPassSeatSts2PassSeatAutMovmtSts: 1
+      isPassSeatSwtStsRotyPassSeatCtrlSts: 1
+      isPassSeatSwtStsRotyPassBtnBackwSts: 1
+      isPassSeatSwtStsRotyPassBtnDwnSts: 1
+      isPassSeatSwtStsRotyPassBtnFwdSts: 1
+      isPassSeatSwtStsRotyPassBtnModSts: 1
+      isPassSeatSwtStsRotyPassBtnRotCcwSts: 1
+      isPassSeatSwtStsRotyPassBtnRotCwSts: 1
+      isPassSeatSwtStsRotyPassBtnUpSts: 1
+      isPassSeatSwtStsRotyPassSeatBtnPsd: 1
+      isPassSeatSwtStsRotyPassSeatSwtActvnMplErr: 1
+    
+    - cluster: "Exposed3CAN"
+      isApplIdStsIntrEx: 1
+
+    - cluster: "PSCM1CAN"
+      isDrvrSteerActvSafePrimDrvrSteerActv: 1 
+      isDrvrSteerWhlHldGroup2DrvrSteerWhlHld: 3
+      isDrvrSteerWhlHldGroup2DrvrSteerWhlHldQly: 13
+      isSteerTqTubeLowrLim: -0.19921875
+      isSteerTqTubeUpprLim: 0.19921875
+      isSteerADStsPrim1AvailPfmnc: 100
+      isStAsstModActv: 1
+      isStPwrDwnRdy: 2
+      isSteerAssiRednFac: 100
+      isSteerLatCtrlModReqCfmd: 5
+
+    - cluster: "RefrigerantSystem1LIN"
+      isElecAirCdnCmprDiagcSts: 2
+        
+
+# Signal Mapping
+MAPPING_LIST:
+
+    - cluster: "BCME1CAN"
+      ECU: "BCME"
+      dir: "Sim"
+      type: "CAN"
+      isFrntAxleWhlSpdSnsrDataWhlAgSpdFrntLe Value: FrntAxleWhlSpdSnsrDataWhlAgSpdFrntLe
+      isFrntAxleWhlSpdSnsrDataWhlAgSpdFrntRi Value: FrntAxleWhlSpdSnsrDataWhlAgSpdFrntRi
+      isReAxleWhlSpdSnsrDataWhlAgSpdReLe Value: ReAxleWhlSpdSnsrDataWhlAgSpdReLe
+      isReAxleWhlSpdSnsrDataWhlAgSpdReRi Value: ReAxleWhlSpdSnsrDataWhlAgSpdReRi
+      isFrntAxleWhlSpdSnsrDataWhlRotDirFrntLe Value: FrntAxleWhlSpdSnsrDataWhlRotDirFrntLe
+      isFrntAxleWhlSpdSnsrDataWhlRotDirFrntRi Value: FrntAxleWhlSpdSnsrDataWhlRotDirFrntRi
+      isReAxleWhlSpdSnsrDataWhlRotDirReLe Value: ReAxleWhlSpdSnsrDataWhlRotDirReLe
+      isReAxleWhlSpdSnsrDataWhlRotDirReRi Value: ReAxleWhlSpdSnsrDataWhlRotDirReRi
+      isFrntAxleWhlSpdSnsrDataWhlRotToothCntrFrntLe Value: ToothCntrFrntLe
+      isFrntAxleWhlSpdSnsrDataWhlRotToothCntrFrntRi Value: ToothCntrFrntRi
+      isReAxleWhlSpdSnsrDataWhlRotToothCntrReLe Value: ToothCntrReLe
+      isReAxleWhlSpdSnsrDataWhlRotToothCntrReRi Value: ToothCntrReRi
+      isVehSpdLgt3VehSpdLgt Value: VehSpd
+      isVehMtnSt2VehMtnSt Value: VehMtnSt
+      isBrkFricTqActTqFrntLe Value: VehBrkFricTqFrntLe
+      isBrkFricTqActTqFrntRi Value: VehBrkFricTqFrntRi
+      isBrkFricTqActTqReLe Value: VehBrkFricTqReLe
+      isBrkFricTqActTqReRi Value: VehBrkFricTqReRi
+      isDrvrBrkPedlReqRdntBrkPedlPsd Value: BrkPelPrsd
+
+    - cluster: "BCME1CAN"
+      ECU: "BCME"
+      dir: "Ins"
+      type: "CAN"
+      isParkCtrlDataSafeESPReq Value: ParkCtrlDataSafeESPReq
+      isBrkTqReqSafeBrkTqReq Value: BrkTqReqSafeBrkTqReq
+  
+    - cluster: "BCM1CAN"
+      ECU: "BCMD"
+      dir: "Sim"
+      type: "CAN"
+      isBrkPedlrRat Value: Pos_BrakePedal[%]
+      isDrvrBrkReqSafeBrkPedlPsd Value: BrkPelPrsd
+      isEPBActuationDataDPBActrSts Value: EPBStsDPB
+      isEPBActuationDataESPActrSts Value: EPBStsESP
+      isEMCRBFMainParkBrakeState Value: MainPrkBrkSt
+      isActMod12BrakePedalApplied Value: BrkPelPrsd
+      isActMod11sInputRod Value: RodStrkDPB
+      isdAPBPrim2pModelFL Value: P_MainBrkCyl
+      isdAPBPrim2pModelFR Value: P_MainBrkCyl
+      isdAPBPrim2pModelRL Value: P_MainBrkCyl
+      isdAPBPrim2pModelRR Value: P_MainBrkCyl        
+      isModAct1pMC1 Value: P_MainBrkCyl
+      isModAct1MotPedalPosDriver Value: Pos_AccPedal_Usr
+      isdAPBPrim1ApbActuatorState Value: APBPrimActuatorSt
+      isDrvrBrkPedlReqBrkPedlPsd Value: BrkPelPrsd
+
+    - cluster: "BCM1CAN"
+      ECU: "BCMD"
+      dir: "Ins"
+      type: "CAN"
+      isParkCtrlDataSafeReq Value: ParkCtrlDataSafeReq
+  
+    - cluster: "SRSMainCAN"
+      ECU: "SRSMAIN"
+      dir: "Sim"
+      type: "CAN"
+      isIMURawDataLatAccRaw Value: IMURawDataLatAccRaw
+      isIMURawDataYawRateRaw Value: IMURawDataYawRateRaw
+      isIMURawDataLongAccRaw Value: IMURawDataLongAccRaw
+      isIMURawDataRollRateRaw Value: IMURawDataRollRateRaw
+      isIMURawDataVertAccRaw Value: IMURawDataVertAccRaw
+      isIMURawDataPitchRateRaw Value: IMURawDataPitchRateRaw
+      isIMURawAndProcessedDataIndicationIMUYawRateRaw Value: IMURawDataYawRateRaw
+      isIMURawAndProcessedDataIndicationIMUYawRateComp Value: IMURawAndProcessedDataIndicationIMUYawRateComp
+      isIMURawAndProcessedDataIndicationIMUYawRateDiff Value: IMURawAndProcessedDataIndicationIMUYawRateDiff
+      isIMURawAndProcessedDataIndicationIMURollRateRaw Value: IMURawDataRollRateRaw
+      isIMURawAndProcessedDataIndicationIMURollRateComp Value: IMURawAndProcessedDataIndicationIMURollRateComp
+      isIMURawAndProcessedDataIndicationIMURollRateDiff Value: IMURawAndProcessedDataIndicationIMURollRateDiff
+      isIMURawAndProcessedDataIndicationIMUPitchRateRaw Value: IMURawDataPitchRateRaw
+      isIMURawAndProcessedDataIndicationIMUPitchRateComp Value: IMURawAndProcessedDataIndicationIMUPitchRateComp
+      isIMURawAndProcessedDataIndicationIMUPitchRateDiff Value: IMURawAndProcessedDataIndicationIMUPitchRateDiff
+      isIMURawAndProcessedDataIndicationIMULongAccRaw Value: IMURawDataLongAccRaw
+      isIMURawAndProcessedDataIndicationIMULongAccDiff Value: IMURawAndProcessedDataIndicationIMULongAccDiff
+      isIMURawAndProcessedDataIndicationIMULatAccRaw Value: IMURawDataLatAccRaw
+      isIMURawAndProcessedDataIndicationIMUVertAccRaw Value: IMURawDataVertAccRaw
+
+    - cluster: "IHFA1CAN"
+      ECU: "IHFA"
+      dir: "Sim"
+      type: "CAN"
+      isEmModStsXXIHFA Value: isEmModReqXXIHFA
+      isEmHvAcTestStsXXIHFA Value: isEmHvAcTestStsXXIHFA
+      isEmNSpdActXXIHFA Value: omega_EM_Front[rpm]
+      isEmTqEstimdXXIHFATqAct Value: Trq_Front[Nm]
+      isEmIvtrHvIDcXXIHFA Value: I_DCLinkIHFA[A]
+      isEmIvtrHvUDcXXIHFA Value: V_Bat_HV[V]
+
+    - cluster: "IHFA1CAN"
+      ECU: "IHFA"
+      dir: "Ins"
+      type: "CAN"
+      isEmModReqXXIHFA Value: isEmModReqXXIHFA
+      isEmNSpdReqXXIHFA Value: isEmNSpdReqXXIHFA
+      isEmTqReqXXIHFA Value: isEmTqReqXXIHFA
+      isEmHvAcTestReqXXIHFA Value: isEmHvAcTestReqXXIHFA
+
+    - cluster: "IHRA1CAN"
+      ECU: "IHRA"
+      dir: "Sim"
+      type: "CAN"
+      isEmModSts Value: isEmModReq
+      isEmHvAcTestSts Value: isEmHvAcTestSts
+      isEmNSpdAct Value: omega_EM_Rear[rpm]
+      isEmTqEstimdTqAct Value: Trq_Rear[Nm]
+      isEmIvtrHvUDc Value: V_Bat_HV[V]
+      isEmIvtrHvIDc Value: I_DCLinkIHRA[A]
+
+    - cluster: "IHRA1CAN"
+      ECU: "IHRA"
+      dir: "Ins"
+      type: "CAN"
+      isEmModReq Value: isEmModReq
+      isEmNSpdReq Value: isEmNSpdReq
+      isEmTqReq Value: isEmTqReq
+      isEmHvAcTestReq Value: isEmHvAcTestReq
+  
+    - cluster: "SWM2CAN"
+      ECU: "SWM"
+      dir: "Sim"
+      type: "CAN"
+      isGearLvrReqParkSwt Value: PButton
+      isGearLvrReqParkWakeUpInput Value: PButton
+  
+    - cluster: "HighVoltage1CAN"
+      ECU: "HighVoltage"
+      dir: "Sim"
+      type: "CAN"
+      isHvBattIDc1 Value: I_DCLink_HV[A]
+      isHvBattUDc2 Value: V_Bat_HV[V]
+      isHvBattChrgnEgyAct2 Value: HvBattEgyAvlChrg
+      isHvBattDchaEgyAct2 Value: HvBattEgyAvlDcha
+      isHvBattEgyAvlChrg1 Value: HvBattEgyAvlChrg
+      isHvBattEgyAvlDcha4 Value: HvBattEgyAvlDcha
+      isHvBattSOCE Value: SOC_Bat_HV[%]
+      isHvBattChrgnLvlForDisp Value: SOC_Bat_HV[%]
+      isHvBattPwr2Pwr Value: HvBattEgyResRms
+      isHvSysRQlyFac Value: HvSysRQlyFac
+      isHvSysRlySts Value: HvSysRlySts
+
+    - cluster: "HighVoltage1CAN"
+      ECU: "HighVoltage"
+      dir: "Ins"
+      type: "CAN"
+      isHvOnMaiReq Value: HvOnMaiReq
+      isHvSysSts Value: HvSysSts
+  
+    - cluster: "TIOC1CAN"
+      ECU: "TIOC"
+      dir: "Ins"
+      type: "CAN"
+      isDeviceAdminReqFromZCLBToTIOCEcuList1 Value: DeviceAdminReqFromZCLBToTIOCEcuList1
+      isDeviceAdminReqFromZCLBToTIOCEcuList2 Value: DeviceAdminReqFromZCLBToTIOCEcuList2
+      isDeviceAdminReqFromZCLBToTIOCEcuList3 Value: DeviceAdminReqFromZCLBToTIOCEcuList3
+      isDeviceAdminReqFromZCLBToTIOCEcuList4 Value: DeviceAdminReqFromZCLBToTIOCEcuList4
+      isDeviceAdminReqFromZCLBToTIOCEcuList5 Value: DeviceAdminReqFromZCLBToTIOCEcuList5
+      isDeviceAdminReqFromZCLBToTIOCEcuList6 Value: DeviceAdminReqFromZCLBToTIOCEcuList6
+  
+    - cluster: "TIOC1CAN"
+      ECU: "TIOC"
+      dir: "Sim"
+      type: "CAN"
+      isSwitchSyncStsFromTIOCToZCLBEcuList1 Value: DeviceAdminReqEcuList1
+      isSwitchSyncStsFromTIOCToZCLBEcuList2 Value: DeviceAdminReqEcuList2
+      isSwitchSyncStsFromTIOCToZCLBEcuList3 Value: DeviceAdminReqEcuList3
+      isSwitchSyncStsFromTIOCToZCLBEcuList4 Value: DeviceAdminReqEcuList4
+      isSwitchSyncStsFromTIOCToZCLBEcuList5 Value: DeviceAdminReqEcuList5
+      isSwitchSyncStsFromTIOCToZCLBEcuList6 Value: DeviceAdminReqEcuList6
+  
+    - cluster: "RefrigerantSystem1LIN"
+      ECU: "ELAC"
+      dir: "Sim"
+      type: "LIN"
+      isElecAirCdnCmprExtdIntglTestSts Value: ElecAirCdnCmprExtdIntglTestSts
+
+    - cluster: "RefrigerantSystem1LIN"
+      ECU: "ELAC"
+      dir: "Ins"
+      type: "LIN"
+      isElecAirCdnCmprCtrlExtdIntglTestReq Value: ElecAirCdnCmprCtrlExtdIntglTestReq
+  
+    - cluster: "HOD1LIN"
+      ECU: "HOD"
+      dir: "Sim"
+      type: "LIN"
+      isTouchdStsHodTouchdIntenSnsr1 Value: TouchdStsHodTouchdIntenSnsr1
+      isTouchdStsHodTouchdIntenSnsr2 Value: TouchdStsHodTouchdIntenSnsr2
+      isTouchdStsHodTouchdIntenSnsr3 Value: TouchdStsHodTouchdIntenSnsr3
+      isTouchdStsHodTouchdStHnd Value: TouchdStsHodTouchdStHnd
+      isTouchdStsHodTouchdStSnsr1 Value: TouchdStsHodTouchdStSnsr1
+      isTouchdStsHodTouchdStSnsr2 Value: TouchdStsHodTouchdStSnsr2
+      isTouchdStsHodTouchdStSnsr3 Value: TouchdStsHodTouchdStSnsr3
