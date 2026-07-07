@@ -11,20 +11,28 @@ from config.data_model import (
 
 logger = logging.getLogger(__name__)
 
-ROOT_LEVEL = 4
-REPO_ROOT = Path(__file__).resolve()
-
-for _ in range(ROOT_LEVEL):
-    REPO_ROOT = REPO_ROOT.parent
-
-def path_config(path: Path) -> str:
-    return str(REPO_ROOT / Path(path))
+REPO_NAME = 'SVA_GPA_Simulation_opt'
 
 def app_config_loader(yaml_path: Path) -> ApplicationConfig:
     """load configuration for application"""
 
     logger.info(" Load configuration for application ")
-    logger.debug(f" Repo root path is: {str(REPO_ROOT)}")
+
+    yaml_path_parts = yaml_path.parts
+
+    try:
+        idx = yaml_path_parts.index(REPO_NAME)
+    except ValueError:
+        logger.exception(f"Repo {REPO_NAME} not found in path: {str(yaml_path)}, "
+                         f"please put yaml file inside the repo.")
+        raise
+
+    repo_root = Path(*yaml_path_parts[:idx])
+
+    def path_config(path: Path) -> str:
+        return str(repo_root / Path(path))
+
+    logger.debug(f" Repo root path is: {str(repo_root)}")
 
     with open(yaml_path, "r") as f:
         raw_config = yaml.safe_load(f)
