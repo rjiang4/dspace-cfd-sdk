@@ -11,7 +11,7 @@ class CfdConfig():
 @dataclass
 class DbConfig():
     """Database property"""
-    db_path: Path
+    db_paths: list[Path]
     
 
 @dataclass
@@ -26,10 +26,10 @@ class MProjConfig():
 @dataclass
 class BmConfig():
     """BusManager property"""
-    vcc_cluster: dict
-    non_vcc_cluster: dict
-    mapping_list: dict
-    init_value: dict
+    vcc_cluster: list
+    non_vcc_cluster: list
+    mapping_list: list
+    init_value: list
 
 @dataclass
 class ApplicationConfig():

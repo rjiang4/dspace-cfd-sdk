@@ -43,8 +43,14 @@ def app_config_loader(yaml_path: Path) -> ApplicationConfig:
         cfd_app_name=raw_config['APPLICATIONNAME'],
     )
     
+    db_paths=[path_config(raw_config['COMMUNICATIONMATRIXPATH'])]
+    
+    for cluster in raw_config['SOLCLUSTERLIST'] or []:
+        if cluster.get("database"):
+            db_paths.append(path_config(cluster.get("database")))
+            
     db_config = DbConfig(
-        db_path=path_config(raw_config['COMMUNICATIONMATRIXPATH']),
+        db_paths=db_paths,
     )
     
     m_proj_config = MProjConfig(

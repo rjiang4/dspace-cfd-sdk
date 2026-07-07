@@ -12,20 +12,54 @@ logger = logging.getLogger(__name__)
 UNIFIED_COM_MATX_NAME = "GPAsystem_MAIN_SystemExtract"
 
 class Controller():
-    def __init__(self, yaml_path: Path):
+    def __init__(self, yaml_path: Path, clusters: list = []):
         self.yaml_path = yaml_path
         self.app_config = app_config_loader(yaml_path=self.yaml_path)
         self.app_service = ApplicationService(app_config=self.app_config)
+        self._cluster_input = clusters
+        
+        self.cluster_list = None
+        self.vcc_cluster = None
+        self.non_vcc_cluster = None
+        self.db_paths = None
+        self.init_v_list = None
+        self.mapping_list = None
+        
+    def initialization(self):
+        """ initialization for application """
+        
+        logger.info(" Initialization for application ")
+        
+        self.vcc_cluster = self.app_config.bus_config.vcc_cluster
+        self.non_vcc_cluster = self.app_config.bus_config.non_vcc_cluster
+        try:
+            self.cluster_list = (self.vcc_cluster + self.non_vcc_cluster) if self.non_vcc_cluster != None else self.vcc_cluster
+        except TypeError as te:
+            if self.vcc_cluster is None:
+                logger.error(" There is no ECU cluster defined ")
+                raise te
+            elif self.non_vcc_cluster is None:
+                logger.debug(" There is no third-party cluster defined")
+                self.cluster_list = self.vcc_cluster
+        
+        self.db_paths = self.app_config.db_config.db_paths
+        self.init_v_list = self.app_config.bus_config.init_value
+        self.mapping_list = self.app_config.bus_config.mapping_list
+        
+        if self._cluster_input:
+            self.cluster_list = [cluster for cluster in self.cluster_list if cluster["cluster"] in self._cluster_input]
+            self.init_v_list = [init_v for init_v in self.init_v_list if init_v["cluster"] in self._cluster_input]
+            self.mapping_list = [mapping for mapping in self.mapping_list if mapping["cluster"] in self._cluster_input]
 
     def pdu_user_code_config(self):
         package_name = "lib"
-        BASE_PATH = Path(__file__).resolve().parent.parent
-        LIB_PATH = BASE_PATH / package_name
-        LIB_PATH_STR = str(LIB_PATH)
-        for py_f in LIB_PATH.glob("*.py"):
-            py_f_str = str(py_f)
+        base_p = Path(__file__).resolve().parent.parent
+        lib_p = base_p / package_name
+        
+        for py_f in lib_p.glob("*.py"):
+            py_f_str = py_f.name
             if py_f_str != "__init__.py" and py_f_str != "Module_Test.py":
-                module_name = f"{LIB_PATH_STR}.{py_f_str[:-3]}"
+                module_name = f"{package_name}.{py_f_str[:-3]}"
                 try:
                     module = importlib.import_module(module_name)
                     funcs = inspect.getmembers(module, inspect.isfunction)
@@ -39,26 +73,15 @@ class Controller():
                     print(f"Failed to import {module_name}: {e}")
 
     def run(self):
-        """ application runner """
+        """ application runner for full CFD automation scope """
+        
+        self.initialization()
         
         logger.info(" Start Matlab Project and Config Data Port Blocks ")
         self.app_service.MatlabService.connet_engine()
         self.app_service.MatlabService.data_port_handler(str(self.yaml_path))
         
         logger.info(" Start BusManager Configuration ")
-        vcc_cluster = self.app_config.bus_config.vcc_cluster
-        non_vcc_cluster = self.app_config.bus_config.non_vcc_cluster
-
-        try:
-            cluster_list = (vcc_cluster + non_vcc_cluster) if non_vcc_cluster != None else vcc_cluster
-        except TypeError as te:
-            if vcc_cluster is None:
-                logger.error(" There is no ECU cluster defined ")
-                raise te
-            elif non_vcc_cluster is None:
-                logger.debug(" There is no third-party cluster defined")
-                cluster_list = vcc_cluster
-
         logger.info(" Import Communication Matrix ")
         try:
             # Add CommunicationMatrix
@@ -66,18 +89,14 @@ class Controller():
             if cmtx_top_nodes.Count != 0:
                 for cmtx_obj in cmtx_top_nodes:
                     self.app_service.BusManagerService.remove_com_mtx(cmtx_obj)
-            self.app_service.BusManagerService.import_com_mtx(self.app_config.db_config.db_path)
-
-            if non_vcc_cluster:
-                for clusters in non_vcc_cluster:
-                    for cluster in clusters.values():
-                        com_matx_path = Path(cluster.get('database'))
-                        self.app_service.BusManagerService.import_com_mtx(com_matx_path)
+            for db_path in self.app_config.db_config.db_paths:
+                self.app_service.BusManagerService.import_com_mtx(db_path)
+                
         except pywintypes.com_error as e:
             logger.error(e)
         
         try:
-            for cluster_i in cluster_list:
+            for cluster_i in self.cluster_list:
                 cluster_name = cluster_i["cluster"]
                 ecus = cluster_i["ECU"]
                 mode = cluster_i["mode"]
@@ -185,11 +204,10 @@ class Controller():
         
         # Set Initial Values
         logger.info(" Set Initial Values ")
-        init_v_list = self.app_config.bus_config.init_value
-        if not init_v_list:
+        if not self.init_v_list:
             logger.warning(" No initial value available ")
         else:
-            for init_v in init_v_list:
+            for init_v in self.init_v_list:
                 cluster_name = init_v["cluster"]
                 for signal_name in init_v:
                     if signal_name == 'cluster':
@@ -202,10 +220,10 @@ class Controller():
         logger.info(" Signal Mapping ")
         self.app_service.IoService.mdl_tp.Configure("Analyze", [])
         self.app_service.IoService.data_port_if_mapping(app_config=self.app_config)
-        if not self.app_config.bus_config.mapping_list:
+        if not self.mapping_list:
             logger.warning('No Mapping list available!')
         else:
-            for mapping in self.app_config.bus_config.mapping_list:
+            for mapping in self.mapping_list:
                 cluster_name = mapping["cluster"]
                 ecu = mapping["ECU"]
                 ecu_dir = mapping["dir"] 
