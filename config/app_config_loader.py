@@ -79,11 +79,10 @@ def app_config_loader(yaml_path: Path, rig: str) -> ApplicationConfig:
     )
     
     m_proj_config = MProjConfig(
-        asm_mdl_name=final_config['ASM_MODEL_NAME'],
-        io_mdl_name=final_config['IO_MODEL_NAME'],
+        io_mdl=final_config['IO_MODEL_NAME'],
+        io_subsystem=final_config["IO_SUBSYSTEM"],
         m_script_path=path_config(final_config['M_SCRIPT_PATH']),
         m_proj_path=path_config(final_config['MODEL_PROJECT_PATH']),
-        m_proj_name=final_config['MODEL_PROJECT_NAME'],
     )
     
     bus_config = BmConfig(

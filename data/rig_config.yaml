@@ -11,12 +11,21 @@ COMMON:
 
   # Leave this section empty if you are not using MATLAB project concept
   # ---------------------------------------------------------------------------
-  #MODEL_PROJECT_PATH: "SVA_GPA_Simulation_opt\\Simulation"
-  #MODEL_PROJECT_NAME: "MasterModel"
+  MODEL_PROJECT_PATH: "SVA_GPA_Simulation_opt\\Simulation\\MasterModel.prj"
+
   # ---------------------------------------------------------------------------
 
   #MODEL_PATH: "SVA_GPA_Simulation_opt\\Simulation\\ModelFiles\\ASM_EV_Model\\Models"
-  #ASM_MODEL_NAME: "ASM_BEV_Model"
+  #SUBSYSTEM_NAME:
+
+  IO_MODEL:
+  IO_SUBSYSTEM:
+
+  LINKED_MODEL:
+  LINKED_SUBSYSTEM_IN:
+  LINKED_DPB_IN:
+  LINKED_SUBSYSTEM_OUT:
+  LINKED_DPB_OUT:
   #IO_MODEL_NAME: "IO"
   #CAN_SUBSYSTEM_NAME: "CAN"
   #LIN_SUBSYSTEM_NAME: "LIN"
