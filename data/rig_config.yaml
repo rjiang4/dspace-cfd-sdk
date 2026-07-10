@@ -1,0 +1,139 @@
+---
+COMMON:
+  # CFD project source
+  PROJECT_ROOT_PATH: "SVA_GPA_Simulation_opt\\Configuration"
+  PROJECT_NAME: "SPA3_Configuration"
+  #COMMUNICATIONMATRIXPATH: "J:\\HIL\\HIL_Development\\SPA3\\Common\\SDB\\14.3"   # Use the abs path to ARXML file
+  COMMUNICATION_MATRIX: "SVA_GPA_Simulation_opt\\SDB"
+
+  # Model Source
+  # M_SCRIPT_PATH: "SVA_GPA_Simulation_opt\\auto_config\\matlab"
+
+  # Leave this section empty if you are not using MATLAB project concept
+  # ---------------------------------------------------------------------------
+  #MODEL_PROJECT_PATH: "SVA_GPA_Simulation_opt\\Simulation"
+  #MODEL_PROJECT_NAME: "MasterModel"
+  # ---------------------------------------------------------------------------
+
+  #MODEL_PATH: "SVA_GPA_Simulation_opt\\Simulation\\ModelFiles\\ASM_EV_Model\\Models"
+  #ASM_MODEL_NAME: "ASM_BEV_Model"
+  #IO_MODEL_NAME: "IO"
+  #CAN_SUBSYSTEM_NAME: "CAN"
+  #LIN_SUBSYSTEM_NAME: "LIN"
+
+  CLUSTER_LIST:
+      - cluster: "BCME1CAN"
+        type: "CAN"
+        ECU: ["BCME"]
+        mode: ["Simulation"]
+
+      - cluster: "BCM1CAN"
+        type: "CAN"
+        ECU: ["BCME", "BCMD"]
+        mode: ["Simulation", "Simulation"]
+      
+      - cluster: "IHFA1CAN"
+        type: "CAN"
+        ECU: ["IHFA"]
+        mode: ["Simulation"]
+
+      - cluster: "IHRA1CAN"
+        type: "CAN"
+        ECU: ["IHRA"]
+        mode: ["Simulation"]
+
+
+  # Solution CAN list
+  SOLUTION_CLUSTER_LIST:
+
+  # Initial Value
+  INITIAL_VALUE:
+
+      - cluster: "BCM1CAN"
+        isActMod12BrakePedalAppliedQf: 1
+        isActMod12FxTargetDriverQf: 1
+        isActMod12pRunoutQf: 1
+        isActMod12ActCircuitNoPressureQf: 1
+        isActMod11sInputRodQf: 1
+        isActMod11sOutputRodActQf: 1
+        
+      - cluster: "BCME1CAN"
+        isWhlBrkTqMaxOvrheatdFrntLe: 3000
+        isWhlBrkTqMaxOvrheatdFrntRi: 3000
+        isWhlBrkTqMaxOvrheatdReLe: 3000
+        isWhlBrkTqMaxOvrheatdReRi: 3000
+      
+
+  # Signal Mapping
+  MAPPING_LIST:
+
+      - cluster: "BCME1CAN"
+        ECU: "BCME"
+        dir: "Sim"
+        type: "CAN"
+        FrntAxleWhlSpdSnsrDataWhlAgSpdFrntLe: FrntAxleWhlSpdSnsrDataWhlAgSpdFrntLe
+
+      - cluster: "BCME1CAN"
+        ECU: "BCME"
+        dir: "Ins"
+        type: "CAN"
+        BrkTqReqSafeBrkTqReq: BrkTqReqSafeBrkTqReq
+    
+      - cluster: "BCM1CAN"
+        ECU: "BCMD"
+        dir: "Sim"
+        type: "CAN"
+        BrkPedlrRat: Pos_BrakePedal[%]
+
+RIGS:
+  SYSINT:
+    APPLICATION_NAME: "SysInt"
+
+    COMMUNICATION_MATRIX:
+
+    CLUSTER_LIST:
+      - cluster: "OHC1CAN"
+        type: "CAN"
+        ECU: ["OHRL", "OHRR"]
+        mode: ["Real", "Real"]
+    
+    SOLUTION_CLUSTER_LIST:
+
+    INITIAL_VALUE:
+      - cluster: "BCM1CAN"
+        ActMod12BrakePedalAppliedQf: 1
+        ActMod12FxTargetDriverQf: 1
+        ActMod12pRunoutQf: 1
+
+    MAPPING_LIST:
+      - cluster: "BCME1CAN"
+        ECU: "BCME"
+        dir: "Ins"
+        type: "CAN"
+        ParkCtrlDataSafeESPReq: ParkCtrlDataSafeESPReq
+
+  DOMAIN:
+    APPLICATION_NAME: "Domain"
+
+    COMMUNICATION_MATRIX:
+
+    CLUSTER_LIST:
+
+    SOLUTION_CLUSTER_LIST:
+
+    INITIAL_VALUE:
+
+    MAPPING_LIST:
+
+  ACTUATOR:
+    APPLICATION_NAME: "Actuator"
+
+    COMMUNICATION_MATRIX:
+
+    CLUSTER_LIST:
+
+    SOLUTION_CLUSTER_LIST:
+
+    INITIAL_VALUE:
+
+    MAPPING_LIST:

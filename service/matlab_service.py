@@ -13,8 +13,14 @@ class MatlabService():
         
         self.app_config = app_config
         self.Matlab_Eng = None
+        
+        # Data port block names
+        self.ext_in = "External_In"
+        self.ext_out = "External_Out"
+        self.bus_sim = "Bus_Simulation"
+        self.bus_ins = "Bus_Inspection"
             
-    def connet_engine(self):
+    def connect_engine(self):
         """ Connect Matlab engine """
         
         if not matlab.engine.find_matlab():

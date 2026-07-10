@@ -11,12 +11,17 @@ from config.data_model import (
 
 logger = logging.getLogger(__name__)
 
-REPO_NAME = 'SVA_GPA_Simulation_opt'
+REPO_NAME = "SVA_GPA_Simulation_opt"
+RIGS = ["SysInt", "Domain", "Actuator"]
 
-def app_config_loader(yaml_path: Path) -> ApplicationConfig:
+def app_config_loader(yaml_path: Path, rig: str) -> ApplicationConfig:
     """load configuration for application"""
 
     logger.info(" Load configuration for application ")
+    
+    if rig not in RIGS:
+        logger.exception(f"Invalid rig type: {rig}, please choose from {RIGS}.")
+        raise ValueError
 
     yaml_path_parts = yaml_path.parts
 
@@ -37,35 +42,55 @@ def app_config_loader(yaml_path: Path) -> ApplicationConfig:
     with open(yaml_path, "r") as f:
         raw_config = yaml.safe_load(f)
     
+    common_config = raw_config["COMMON"]
+    rig_config = raw_config["RIGS"][rig.upper()]
+    
+    final_config = common_config | rig_config
+    
+    final_config["CLUSTER_LIST"] = \
+        (common_config.get("CLUSTER_LIST") or []) + \
+        (rig_config.get("CLUSTER_LIST") or [])
+        
+    final_config["SOLUTION_CLUSTER_LIST"] = \
+        (common_config.get("SOLUTION_CLUSTER_LIST") or []) + \
+        (rig_config.get("SOLUTION_CLUSTER_LIST") or [])
+
+    final_config["INITIAL_VALUE"] = \
+        (common_config.get("INITIAL_VALUE") or []) + \
+        (rig_config.get("INITIAL_VALUE") or [])
+        
+    final_config["MAPPING_LIST"] = \
+        (common_config.get("MAPPING_LIST") or []) + \
+        (rig_config.get("MAPPING_LIST") or [])
+        
+    final_config["COMMUNICATION_MATRIX"] = \
+        (common_config.get("COMMUNICATION_MATRIX") or []) + \
+        (rig_config.get("COMMUNICATION_MATRIX") or [])
+    
+    
     cfd_config = CfdConfig(
-        cfd_proj_path=path_config(raw_config['PROJECTROOTPATH']),
-        cfd_proj_name=raw_config['PROJECTNAME'],
-        cfd_app_name=raw_config['APPLICATIONNAME'],
+        cfd_proj_path=path_config(final_config["PROJECT_ROOT_PATH"]),
+        cfd_proj_name=final_config["PROJECT_NAME"],
+        cfd_app_name=final_config["APPLICATION_NAME"],
     )
-    
-    db_paths=[path_config(raw_config['COMMUNICATIONMATRIXPATH'])]
-    
-    for cluster in raw_config['SOLCLUSTERLIST'] or []:
-        if cluster.get("database"):
-            db_paths.append(path_config(cluster.get("database")))
             
     db_config = DbConfig(
-        db_paths=db_paths,
+        db_paths=[path_config(final_config["COMMUNICATION_MATRIX"])],
     )
     
     m_proj_config = MProjConfig(
-        asm_mdl_name=raw_config['ASM_MODEL_NAME'],
-        io_mdl_name=raw_config['IO_MODEL_NAME'],
-        m_script_path=path_config(raw_config['M_SCRIPT_PATH']),
-        m_proj_path=path_config(raw_config['MODEL_PROJECT_PATH']),
-        m_proj_name=raw_config['MODEL_PROJECT_NAME'],
+        asm_mdl_name=final_config['ASM_MODEL_NAME'],
+        io_mdl_name=final_config['IO_MODEL_NAME'],
+        m_script_path=path_config(final_config['M_SCRIPT_PATH']),
+        m_proj_path=path_config(final_config['MODEL_PROJECT_PATH']),
+        m_proj_name=final_config['MODEL_PROJECT_NAME'],
     )
     
     bus_config = BmConfig(
-        vcc_cluster=raw_config['VCCCLUSTERLIST'],
-        non_vcc_cluster=raw_config['SOLCLUSTERLIST'],
-        init_value=raw_config['INITIAL_VALUE'],
-        mapping_list=raw_config['MAPPING_LIST'],
+        vcc_cluster=final_config['VCC_CLUSTER_LIST'],
+        non_vcc_cluster=final_config['SOLUTION_CLUSTER_LIST'],
+        init_value=final_config['INITIAL_VALUE'],
+        mapping_list=final_config['MAPPING_LIST'],
     )
     
     return ApplicationConfig(
