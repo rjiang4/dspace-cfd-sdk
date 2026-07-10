@@ -25,7 +25,7 @@ def app_config_loader(yaml_path: Path, rig: str) -> ApplicationConfig:
 
     workspace_parent = Path(__file__).resolve().parents[2]
 
-    def path_config(path: Path | str | None) -> str | None:
+    def path_config(path: Path) -> str:
         if path is None:
             return None
         path = Path(path)
