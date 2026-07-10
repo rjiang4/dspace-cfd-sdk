@@ -11,41 +11,39 @@ from config.data_model import (
 
 logger = logging.getLogger(__name__)
 
-REPO_NAME = "SVA_GPA_Simulation_opt"
-RIGS = ["SysInt", "Domain", "Actuator"]
+RIGS = ["SYSINT", "DOMAIN", "ACTUATOR"]
 
 def app_config_loader(yaml_path: Path, rig: str) -> ApplicationConfig:
     """load configuration for application"""
 
     logger.info(" Load configuration for application ")
+    rig = rig.upper()
     
     if rig not in RIGS:
         logger.exception(f"Invalid rig type: {rig}, please choose from {RIGS}.")
         raise ValueError
 
-    yaml_path_parts = yaml_path.parts
+    workspace_parent = Path(__file__).resolve().parents[2]
 
-    try:
-        idx = yaml_path_parts.index(REPO_NAME)
-    except ValueError:
-        logger.exception(f"Repo {REPO_NAME} not found in path: {str(yaml_path)}, "
-                         f"please put yaml file inside the repo.")
-        raise
+    def path_config(path: Path | str | None) -> str | None:
+        if path is None:
+            return None
+        path = Path(path)
+        if path.is_absolute():
+            return str(path)
+        return str(workspace_parent / path)
 
-    repo_root = Path(*yaml_path_parts[:idx])
-
-    def path_config(path: Path) -> str:
-        return str(repo_root / Path(path))
-
-    logger.debug(f" Repo root path is: {str(repo_root)}")
+    logger.debug(f" Workspace parent path is: {str(workspace_parent)}")
 
     with open(yaml_path, "r") as f:
         raw_config = yaml.safe_load(f)
     
     common_config = raw_config["COMMON"]
-    rig_config = raw_config["RIGS"][rig.upper()]
+    rig_config = raw_config["RIGS"][rig]
+    mdl_config = common_config.get("MODEL") or {}
     
     final_config = common_config | rig_config
+    final_config.update(mdl_config)
     
     final_config["CLUSTER_LIST"] = \
         (common_config.get("CLUSTER_LIST") or []) + \
@@ -64,9 +62,8 @@ def app_config_loader(yaml_path: Path, rig: str) -> ApplicationConfig:
         (rig_config.get("MAPPING_LIST") or [])
         
     final_config["COMMUNICATION_MATRIX"] = \
-        (common_config.get("COMMUNICATION_MATRIX") or []) + \
-        (rig_config.get("COMMUNICATION_MATRIX") or [])
-    
+        rig_config.get("COMMUNICATION_MATRIX") or \
+        common_config.get("COMMUNICATION_MATRIX")
     
     cfd_config = CfdConfig(
         cfd_proj_path=path_config(final_config["PROJECT_ROOT_PATH"]),
@@ -79,15 +76,20 @@ def app_config_loader(yaml_path: Path, rig: str) -> ApplicationConfig:
     )
     
     m_proj_config = MProjConfig(
-        io_mdl=final_config['IO_MODEL_NAME'],
+        io_mdl=final_config["IO_MODEL"],
         io_subsystem=final_config["IO_SUBSYSTEM"],
-        m_script_path=path_config(final_config['M_SCRIPT_PATH']),
+        lkd_mdl=final_config["LINKED_MODEL"],
+        lkd_subsystem_in=final_config["LINKED_SUBSYSTEM_IN"],
+        lkd_dpb_in=final_config["LINKED_DPB_IN"],
+        lkd_subsystem_out=final_config["LINKED_SUBSYSTEM_OUT"],
+        lkd_dpb_out=final_config["LINKED_DPB_OUT"],
+        
         m_proj_path=path_config(final_config['MODEL_PROJECT_PATH']),
     )
     
     bus_config = BmConfig(
-        vcc_cluster=final_config['VCC_CLUSTER_LIST'],
-        non_vcc_cluster=final_config['SOLUTION_CLUSTER_LIST'],
+        cluster=final_config['CLUSTER_LIST'],
+        solution_cluster=final_config['SOLUTION_CLUSTER_LIST'],
         init_value=final_config['INITIAL_VALUE'],
         mapping_list=final_config['MAPPING_LIST'],
     )

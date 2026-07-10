@@ -6,49 +6,50 @@ COMMON:
   #COMMUNICATIONMATRIXPATH: "J:\\HIL\\HIL_Development\\SPA3\\Common\\SDB\\14.3"   # Use the abs path to ARXML file
   COMMUNICATION_MATRIX: "SVA_GPA_Simulation_opt\\SDB"
 
-  # Model Source
-  # M_SCRIPT_PATH: "SVA_GPA_Simulation_opt\\auto_config\\matlab"
+  MODEL:
+    # Model Source
+    # M_SCRIPT_PATH: "SVA_GPA_Simulation_opt\\auto_config\\matlab"
 
-  # Leave this section empty if you are not using MATLAB project concept
-  # ---------------------------------------------------------------------------
-  MODEL_PROJECT_PATH: "SVA_GPA_Simulation_opt\\Simulation\\MasterModel.prj"
+    # Leave this section empty if you are not using MATLAB project concept
+    # ---------------------------------------------------------------------------
+    MODEL_PROJECT_PATH: "SVA_GPA_Simulation_opt\\Simulation\\MasterModel.prj"
 
-  # ---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
 
-  #MODEL_PATH: "SVA_GPA_Simulation_opt\\Simulation\\ModelFiles\\ASM_EV_Model\\Models"
-  #SUBSYSTEM_NAME:
+    #MODEL_PATH: "SVA_GPA_Simulation_opt\\Simulation\\ModelFiles\\ASM_EV_Model\\Models"
+    #SUBSYSTEM_NAME:
 
-  IO_MODEL:
-  IO_SUBSYSTEM:
+    IO_MODEL: "IO"
+    IO_SUBSYSTEM: "IO_SUB"
 
-  LINKED_MODEL:
-  LINKED_SUBSYSTEM_IN:
-  LINKED_DPB_IN:
-  LINKED_SUBSYSTEM_OUT:
-  LINKED_DPB_OUT:
-  #IO_MODEL_NAME: "IO"
-  #CAN_SUBSYSTEM_NAME: "CAN"
-  #LIN_SUBSYSTEM_NAME: "LIN"
+    LINKED_MODEL:
+    LINKED_SUBSYSTEM_IN:
+    LINKED_DPB_IN:
+    LINKED_SUBSYSTEM_OUT:
+    LINKED_DPB_OUT:
+    #IO_MODEL_NAME: "IO"
+    #CAN_SUBSYSTEM_NAME: "CAN"
+    #LIN_SUBSYSTEM_NAME: "LIN"
 
   CLUSTER_LIST:
       - cluster: "BCME1CAN"
         type: "CAN"
-        ECU: ["BCME"]
+        ecu: ["BCME"]
         mode: ["Simulation"]
 
       - cluster: "BCM1CAN"
         type: "CAN"
-        ECU: ["BCME", "BCMD"]
+        ecu: ["BCME", "BCMD"]
         mode: ["Simulation", "Simulation"]
       
       - cluster: "IHFA1CAN"
         type: "CAN"
-        ECU: ["IHFA"]
+        ecu: ["IHFA"]
         mode: ["Simulation"]
 
       - cluster: "IHRA1CAN"
         type: "CAN"
-        ECU: ["IHRA"]
+        ecu: ["IHRA"]
         mode: ["Simulation"]
 
 
@@ -77,19 +78,19 @@ COMMON:
   MAPPING_LIST:
 
       - cluster: "BCME1CAN"
-        ECU: "BCME"
+        ecu: "BCME"
         dir: "Sim"
         type: "CAN"
         FrntAxleWhlSpdSnsrDataWhlAgSpdFrntLe: FrntAxleWhlSpdSnsrDataWhlAgSpdFrntLe
 
       - cluster: "BCME1CAN"
-        ECU: "BCME"
+        ecu: "BCME"
         dir: "Ins"
         type: "CAN"
         BrkTqReqSafeBrkTqReq: BrkTqReqSafeBrkTqReq
     
       - cluster: "BCM1CAN"
-        ECU: "BCMD"
+        ecu: "BCMD"
         dir: "Sim"
         type: "CAN"
         BrkPedlrRat: Pos_BrakePedal[%]
@@ -103,7 +104,7 @@ RIGS:
     CLUSTER_LIST:
       - cluster: "OHC1CAN"
         type: "CAN"
-        ECU: ["OHRL", "OHRR"]
+        ecu: ["OHRL", "OHRR"]
         mode: ["Real", "Real"]
     
     SOLUTION_CLUSTER_LIST:
@@ -116,7 +117,7 @@ RIGS:
 
     MAPPING_LIST:
       - cluster: "BCME1CAN"
-        ECU: "BCME"
+        ecu: "BCME"
         dir: "Ins"
         type: "CAN"
         ParkCtrlDataSafeESPReq: ParkCtrlDataSafeESPReq

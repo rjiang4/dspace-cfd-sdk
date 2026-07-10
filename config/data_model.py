@@ -18,16 +18,19 @@ class DbConfig():
 class MProjConfig():
     """Matlab project property"""
     m_proj_path: Path
-    m_proj_name: str
-    m_script_path: Path
-    asm_mdl_name: str
-    io_mdl_name: str
+    io_mdl: str
+    io_subsystem: str
+    lkd_mdl: str | None
+    lkd_subsystem_in: str | None
+    lkd_dpb_in: str | None
+    lkd_subsystem_out: str | None
+    lkd_dpb_out: str | None
 
 @dataclass
 class BmConfig():
     """BusManager property"""
-    vcc_cluster: list
-    non_vcc_cluster: list
+    cluster: list
+    solution_cluster: list
     mapping_list: list
     init_value: list
 

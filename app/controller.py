@@ -12,15 +12,15 @@ logger = logging.getLogger(__name__)
 UNIFIED_COM_MATX_NAME = "GPAsystem_MAIN_SystemExtract"
 
 class Controller():
-    def __init__(self, yaml_path: Path, clusters: list = []):
+    def __init__(self, yaml_path: Path, rig: str, clusters: list = []):
         self.yaml_path = yaml_path
-        self.app_config = app_config_loader(yaml_path=self.yaml_path)
+        self.app_config = app_config_loader(yaml_path=self.yaml_path, rig=rig)
         self.app_service = ApplicationService(app_config=self.app_config)
         self._cluster_input = clusters
         
         self.cluster_list = None
-        self.vcc_cluster = None
-        self.non_vcc_cluster = None
+        self.cluster = None
+        self.non_cluster = None
         self.db_paths = None
         self.init_v_list = None
         self.mapping_list = None
@@ -30,17 +30,17 @@ class Controller():
         
         logger.info(" Initialization for application ")
         
-        self.vcc_cluster = self.app_config.bus_config.vcc_cluster
-        self.non_vcc_cluster = self.app_config.bus_config.non_vcc_cluster
+        self.cluster = self.app_config.bus_config.cluster
+        self.solution_cluster = self.app_config.bus_config.solution_cluster
         try:
-            self.cluster_list = (self.vcc_cluster + self.non_vcc_cluster) if self.non_vcc_cluster != None else self.vcc_cluster
+            self.cluster_list = (self.cluster + self.solution_cluster) if self.solution_cluster != None else self.cluster
         except TypeError as te:
-            if self.vcc_cluster is None:
+            if self.cluster is None:
                 logger.error(" There is no ECU cluster defined ")
                 raise te
-            elif self.non_vcc_cluster is None:
+            elif self.solution_cluster is None:
                 logger.debug(" There is no third-party cluster defined")
-                self.cluster_list = self.vcc_cluster
+                self.cluster_list = self.cluster
         
         self.db_paths = self.app_config.db_config.db_paths
         self.init_v_list = self.app_config.bus_config.init_value
@@ -78,7 +78,7 @@ class Controller():
         self.initialization()
         
         logger.info(" Start Matlab Project and Config Data Port Blocks ")
-        self.app_service.MatlabService.connet_engine()
+        self.app_service.MatlabService.connect_engine()
         self.app_service.MatlabService.data_port_handler(str(self.yaml_path))
         
         logger.info(" Start BusManager Configuration ")
@@ -98,7 +98,7 @@ class Controller():
         try:
             for cluster_i in self.cluster_list:
                 cluster_name = cluster_i["cluster"]
-                ecus = cluster_i["ECU"]
+                ecus = cluster_i["ECU"] if "ECU" in cluster_i else cluster_i["ecu"]
                 mode = cluster_i["mode"]
                 bus_type = cluster_i["type"]
                 bus_configuration_name = cluster_name + "_BUS"
@@ -225,11 +225,11 @@ class Controller():
         else:
             for mapping in self.mapping_list:
                 cluster_name = mapping["cluster"]
-                ecu = mapping["ECU"]
+                ecu = mapping["ECU"] if "ECU" in mapping else mapping["ecu"]
                 ecu_dir = mapping["dir"] 
                 signal_type = mapping["type"]       
                 for function_port_name in mapping:
-                    if function_port_name == "ECU" or function_port_name == "dir" \
+                    if function_port_name == "ECU" or function_port_name == "ecu" or function_port_name == "dir" \
                         or function_port_name == "cluster" or function_port_name == "type":
                         continue
                     model_port_name = mapping[function_port_name]
