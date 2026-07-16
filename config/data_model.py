@@ -20,11 +20,11 @@ class MProjConfig():
     m_proj_path: Path
     io_mdl: str
     io_subsystem: str
-    lkd_mdl: str | None
-    lkd_subsystem_in: str | None
-    lkd_dpb_in: str | None
-    lkd_subsystem_out: str | None
-    lkd_dpb_out: str | None
+    lkd_mdl: str
+    lkd_subsystem_in: str
+    lkd_dpb_in: str
+    lkd_subsystem_out: str
+    lkd_dpb_out: str
 
 @dataclass
 class BmConfig():

@@ -1,10 +1,10 @@
 ---
 COMMON:
   # CFD project source
-  PROJECT_ROOT_PATH: "SVA_GPA_Simulation_opt\\Configuration"
+  PROJECT_ROOT_PATH: "SVA_GPA_Simulation\\Configuration"
   PROJECT_NAME: "SPA3_Configuration"
   #COMMUNICATIONMATRIXPATH: "J:\\HIL\\HIL_Development\\SPA3\\Common\\SDB\\14.3"   # Use the abs path to ARXML file
-  COMMUNICATION_MATRIX: "SVA_GPA_Simulation_opt\\SDB"
+  COMMUNICATION_MATRIX: "SVA_GPA_Simulation\\SDB"
 
   MODEL:
     # Model Source
@@ -12,7 +12,7 @@ COMMON:
 
     # Leave this section empty if you are not using MATLAB project concept
     # ---------------------------------------------------------------------------
-    MODEL_PROJECT_PATH: "SVA_GPA_Simulation_opt\\Simulation\\MasterModel.prj"
+    MODEL_PROJECT_PATH: "SVA_GPA_Simulation\\Simulation\\MasterModel.prj"
 
     # ---------------------------------------------------------------------------
 
@@ -80,19 +80,19 @@ COMMON:
       - cluster: "BCME1CAN"
         ecu: "BCME"
         dir: "Sim"
-        type: "CAN"
+        protocol: "CAN"
         FrntAxleWhlSpdSnsrDataWhlAgSpdFrntLe: FrntAxleWhlSpdSnsrDataWhlAgSpdFrntLe
 
       - cluster: "BCME1CAN"
         ecu: "BCME"
         dir: "Ins"
-        type: "CAN"
+        protocol: "CAN"
         BrkTqReqSafeBrkTqReq: BrkTqReqSafeBrkTqReq
     
       - cluster: "BCM1CAN"
         ecu: "BCMD"
         dir: "Sim"
-        type: "CAN"
+        protocol: "CAN"
         BrkPedlrRat: Pos_BrakePedal[%]
 
 RIGS:
@@ -119,7 +119,7 @@ RIGS:
       - cluster: "BCME1CAN"
         ecu: "BCME"
         dir: "Ins"
-        type: "CAN"
+        protocol: "CAN"
         ParkCtrlDataSafeESPReq: ParkCtrlDataSafeESPReq
 
   DOMAIN:

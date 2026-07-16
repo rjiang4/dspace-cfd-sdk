@@ -23,9 +23,10 @@ def app_config_loader(yaml_path: Path, rig: str) -> ApplicationConfig:
         logger.exception(f"Invalid rig type: {rig}, please choose from {RIGS}.")
         raise ValueError
 
-    workspace_parent = Path(__file__).resolve().parents[2]
+    #TODO: make repo path an input arguments
+    workspace_parent = Path(__file__).resolve().parents[3]
 
-    def path_config(path: Path | str | None) -> str | None:
+    def path_config(path: Path) -> str:
         if path is None:
             return None
         path = Path(path)

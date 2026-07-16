@@ -138,10 +138,14 @@ class BusManagerService():
                 init_value.TrySetValue(3)
                 
         #Special case for signal isHvSysRQlyFac
-        init_sw_setting = self.bus_config_rel.FindByXPath(
-            f'//BusConfigurationPartSimulatedEcus//FunctionPort[@Name = "isHvSysRQlyFac Value"]'
-            f'/@InitialSwitchSetting')[0]
-        init_sw_setting.TrySetValue("Model signal")
+        hv_sys_qf = "isHvSysRQlyFac Value"
+        try:
+            init_sw_setting = self.bus_config_rel.FindByXPath(
+                f'//BusConfigurationPartSimulatedEcus//FunctionPort[@Name = "{hv_sys_qf}"]'
+                f'/@InitialSwitchSetting')[0]
+            init_sw_setting.TrySetValue("Model signal")
+        except IndexError:
+            logger.exception(f"Signal {hv_sys_qf} doesn't exist")
         
     def set_init_value(self, cluster, signal_name, signal_value):
         """ 

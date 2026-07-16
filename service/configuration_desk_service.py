@@ -14,6 +14,8 @@ class ConfigurationDeskService():
         self.proj_root_path = None
         self.active_proj = None
         self.active_app = None
+        self.cfd_proj_name = None
+        self.cfd_app_name = None
         self.app_config = app_config
 
 
@@ -41,6 +43,16 @@ class ConfigurationDeskService():
         
         if cfd_proj_name is None:
             cfd_proj_name = self.app_config.cfd_config.cfd_proj_name
+        
+        self.cfd_proj_name = self.app_config.cfd_config.cfd_proj_name
+
+        self.cfd_app_name = self.app_config.cfd_config.cfd_app_name
+
+        if self.cfd_app.ActiveProjectRoot.PathName != self.proj_root_path \
+                    or self.cfd_app.ActiveProject.Name != self.cfd_proj_name \
+                    or self.cfd_app.ActiveApplication.Application.Name != self.cfd_app_name:
+                    print(f"Closing current application: {self.cfd_app.ActiveApplication.Application.Name}")
+                    self.cfd_app.ActiveProject.Close(True)
         
         # Specify or create project root.
         if self.cfd_app.ProjectRoots.Contains(cfd_proj_path):

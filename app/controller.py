@@ -75,11 +75,11 @@ class Controller():
     def run(self):
         """ application runner for full CFD automation scope """
         
-        self.initialization()
-        
         logger.info(" Start Matlab Project and Config Data Port Blocks ")
         self.app_service.MatlabService.connect_engine()
-        self.app_service.MatlabService.data_port_handler(str(self.yaml_path))
+        self.app_service.MatlabService.data_port_handler()
+
+        self.initialization()
         
         logger.info(" Start BusManager Configuration ")
         logger.info(" Import Communication Matrix ")
